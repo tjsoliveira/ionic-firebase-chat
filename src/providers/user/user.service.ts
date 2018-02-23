@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class UserProvider {
 
   private usersCollection: AngularFirestoreCollection<User>;
-  users: Observable<any[]>;
+  users: Observable<User[]>;
 
   constructor(
     public firestore: AngularFirestore
@@ -26,5 +26,9 @@ export class UserProvider {
       "password": user.password
     })
     return this.usersCollection.add(reg);
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.users;
   }
 }
