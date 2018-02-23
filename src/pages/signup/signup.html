@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Signup</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <h1 text-center>
+    <ion-icon class="auth-icon" name="person-add" color="primary"></ion-icon>
+  </h1>
+
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-icon name="person" item-left></ion-icon>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="at" item-left></ion-icon>
+      <ion-label>Username</ion-label>
+      <ion-input type="text" formControlName="username"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="mail" item-left></ion-icon>
+      <ion-label>E-mail</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="lock" item-left></ion-icon>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <br>
+    <button ion-button full type="submit" [disabled]="!signupForm.valid">Create Account</button>
+
+  </form>
+</ion-content>
