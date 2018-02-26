@@ -1,11 +1,10 @@
-import { User } from './../../models/users.model';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable()
-export class UserProvider {
+export class UserService {
 
   private usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
@@ -23,7 +22,7 @@ export class UserProvider {
       "name": user.name,
       "username": user.username,
       "email": user.email,
-      "password": user.password
+      "uid": user.uid
     })
     return this.usersCollection.add(reg);
   }

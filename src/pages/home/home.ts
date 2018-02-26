@@ -1,9 +1,9 @@
-import { UserProvider } from './../../providers/user/user.service';
+import { UserService } from './../../providers/user.service';
 import { SignupPage } from './../signup/signup';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs';
-import { User } from '../../models/users.model';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'page-home',
@@ -15,13 +15,13 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    private userProvider: UserProvider
+    private userService: UserService
   ) {
 
   }
 
   ionViewDidLoad(){
-    this.users = this.userProvider.getUsers();
+    this.users = this.userService.getUsers();
   }
 
   onClick(): void {

@@ -1,9 +1,10 @@
 import { HomePage } from './../home/home';
-import { UserProvider } from './../../providers/user/user.service';
+import { UserService } from './../../providers/user.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Loading, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../../models/users.model';
+import { User } from '../../models/user.model';
+import { AuthService } from '../../providers/auth.service';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,9 @@ export class SignupPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public userProvider: UserProvider) {
+    public authService: AuthService,
+    public userService: UserService,
+    public loadingCtrl: LoadingController) {
 
       this.signupForm = formBuilder.group({
         name: this.formBuilder.control('', [Validators.required, Validators.minLength(3)]),
@@ -33,32 +36,41 @@ export class SignupPage {
   }
 
   onSubmit() {
-    this.userProvider.create(new User(
-      this.signupForm.get('name').value,
-      this.signupForm.get('username').value,
+
+    let loading: Loading = this.showLoading();
+
+    this.authService.createAuthUser(
       this.signupForm.get('email').value,
-      this.signupForm.get('password').value)).then(() => {
+      this.signupForm.get('password').value)
+      .then( (authState) => {
+        this.userService.create(new User(
+          this.signupForm.get('name').value,
+          this.signupForm.get('username').value,
+          this.signupForm.get('email').value,
+          authState.uid)
+        )})
+        .then(() => {
+          // show alert after create account
+          loading.dismiss();
+          this.navCtrl.setRoot(HomePage)
 
-        // show alert after create account
-        let alert = this.alertCtrl.create({
-          title: 'Account Created',
-          subTitle: 'The account was created. Please login!',
-          buttons: [{
-            text: 'OK',
-            handler: data => {
-              this.navCtrl.setRoot(HomePage)
-            }
-          }]
-        });
-        alert.present();
 
-      }).catch(error => {
-        let alert = this.alertCtrl.create({
-          title: 'Create Account Error',
-          subTitle: error,
-          buttons: ['OK']
+        }).catch(error => {
+          let alert = this.alertCtrl.create({
+            title: 'Create Account Error',
+            subTitle: error,
+            buttons: ['OK']
+          });
+          alert.present();
         });
-        alert.present();
-      });
   }
+
+  private showLoading(): Loading {
+    let loading: Loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    loading.present();
+    return loading;
+  }
+
 }
