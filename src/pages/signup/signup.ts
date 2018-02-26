@@ -53,8 +53,6 @@ export class SignupPage {
           // show alert after create account
           loading.dismiss();
           this.navCtrl.setRoot(HomePage)
-
-
         }).catch(error => {
           let alert = this.alertCtrl.create({
             title: 'Create Account Error',
@@ -62,6 +60,7 @@ export class SignupPage {
             buttons: ['OK']
           });
           alert.present();
+          loading.dismiss();
         });
   }
 

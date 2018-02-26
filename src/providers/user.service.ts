@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { BaseService } from './base.service';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseService{
 
   private usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
@@ -12,6 +14,7 @@ export class UserService {
   constructor(
     public firestore: AngularFirestore
   ) {
+    super();
     this.usersCollection = this.firestore.collection('users');
     this.users = this.usersCollection.valueChanges();
   }
@@ -28,6 +31,6 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.users;
+    return this.users.catch(this.handleObservableError);
   }
 }
