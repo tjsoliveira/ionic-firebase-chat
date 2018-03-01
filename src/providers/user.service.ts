@@ -1,4 +1,5 @@
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFireModule } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,7 +13,8 @@ export class UserService extends BaseService{
   users: Observable<User[]>;
 
   constructor(
-    public firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private af: AngularFireModule
   ) {
     super();
     this.usersCollection = this.firestore.collection('users');
@@ -32,5 +34,22 @@ export class UserService extends BaseService{
 
   getUsers(): Observable<User[]> {
     return this.users.catch(this.handleObservableError);
+  }
+
+  userExists(username: string): Promise<any> {
+
+    let retorno = new Promise((resolve, reject) => {
+
+      this.users.subscribe(user => {
+        user.map(key => {
+
+          let name: string = key.username;
+          if (name === username){
+            resolve(true);
+          }
+        })
+      });
+    })
+   return retorno;
   }
 }

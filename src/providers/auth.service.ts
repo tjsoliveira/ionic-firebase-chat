@@ -17,4 +17,8 @@ export class AuthService extends BaseService {
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
       .catch(this.handlePromiseError);
   }
+
+  signWithEmail(user: {email: string, password: string}): Promise<User>{
+    return this.fireAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+  }
 }

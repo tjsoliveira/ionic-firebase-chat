@@ -1,19 +1,19 @@
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AuthService } from './../providers/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { AuthService } from './../providers/auth.service';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
-
+import { AngularFirestore } from 'angularfire2/firestore';
 import { MyApp } from './app.component';
+
 import { HomePage } from '../pages/home/home';
+import { SigninPage } from './../pages/signin/signin';
 import { SignupPage } from './../pages/signup/signup';
 import { UserService } from './../providers/user.service';
-import { AngularFirestore } from 'angularfire2/firestore';
-
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyCTvjyX4u4Nfy88Culd0TuvcOfc_QxENCU",
@@ -28,6 +28,7 @@ const firebaseAppConfig: FirebaseAppConfig = {
   declarations: [
     MyApp,
     HomePage,
+    SigninPage,
     SignupPage
   ],
   imports: [
@@ -40,6 +41,7 @@ const firebaseAppConfig: FirebaseAppConfig = {
   entryComponents: [
     MyApp,
     HomePage,
+    SigninPage,
     SignupPage
   ],
   providers: [

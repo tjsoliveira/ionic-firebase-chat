@@ -24,13 +24,16 @@ export class HomePage {
     this.users = this.userService.getUsers();
   }
 
-  onClick(): void {
+  login() {
+
+  }
+
+  onSignup() {
     this.navCtrl.push(SignupPage)
   }
 
-  onChatCreate(user: User){
-    console.log(user);
+  onChatCreate() {
+    console.log("Chat Created!");
 
   }
-
 }
