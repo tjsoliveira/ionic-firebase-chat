@@ -21,4 +21,12 @@ export class AuthService extends BaseService {
   signWithEmail(user: {email: string, password: string}): Promise<User>{
     return this.fireAuth.auth.signInWithEmailAndPassword(user.email, user.password);
   }
+
+  logout(): Promise<void> {
+    return this.fireAuth.auth.signOut();
+  }
+
+  currentUser(): User {
+    return this.fireAuth.auth.currentUser;
+  }
 }
