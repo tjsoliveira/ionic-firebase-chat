@@ -1,4 +1,3 @@
-import { UserService } from './../../providers/user.service';
 import { HomePage } from './../home/home';
 import { AuthService } from './../../providers/auth.service';
 import { Component } from '@angular/core';
@@ -22,8 +21,7 @@ export class SigninPage {
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController,
-    private userService: UserService) {
+    private loadingCtrl: LoadingController) {
 
       this.loginForm = formBuilder.group({
         email: this.formBuilder.control('', [Validators.compose([
@@ -32,10 +30,6 @@ export class SigninPage {
         password: this.formBuilder.control('', [Validators.required, Validators.minLength(6)])
       })
     }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SigninPage');
-  }
 
   login() {
 
@@ -65,10 +59,6 @@ export class SigninPage {
       })
   }
 
-  onSignup() {
-    this.navCtrl.push(SignupPage);
-  }
-
   private showLoading(): Loading {
     let loading: Loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -77,4 +67,18 @@ export class SigninPage {
     return loading;
   }
 
+  home() {
+    this.navCtrl.setRoot(HomePage).then(
+      (hasAccess: boolean) => {
+        console.log("Autorizado ", hasAccess);
+      }
+    ).catch(error => {
+      console.log("Não Autorizado");
+
+    });
+  }
+
+  onSignup(){
+    this.navCtrl.push(SignupPage);
+  }
 }

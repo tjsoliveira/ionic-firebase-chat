@@ -29,4 +29,10 @@ export class AuthService extends BaseService {
   currentUser(): User {
     return this.fireAuth.auth.currentUser;
   }
+
+  get authenticated(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.currentUser() ? resolve(true) : reject(false);
+    });
+  }
 }

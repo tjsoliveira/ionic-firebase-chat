@@ -1,3 +1,4 @@
+import { CapitalizePipe } from './../pipes/capitalize.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -14,6 +15,7 @@ import { HomePage } from '../pages/home/home';
 import { SigninPage } from './../pages/signin/signin';
 import { SignupPage } from './../pages/signup/signup';
 import { UserService } from './../providers/user.service';
+import { CustomLoggedHeaderComponent } from '../components/custom-logged-header/custom-logged-header';
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyCTvjyX4u4Nfy88Culd0TuvcOfc_QxENCU",
@@ -26,8 +28,10 @@ const firebaseAppConfig: FirebaseAppConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
+    CapitalizePipe,
+    CustomLoggedHeaderComponent,
     HomePage,
+    MyApp,
     SigninPage,
     SignupPage
   ],

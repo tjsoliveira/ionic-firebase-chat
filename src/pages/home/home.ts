@@ -1,9 +1,8 @@
 import { AuthService } from './../../providers/auth.service';
-import { AlertController, NavController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SigninPage } from '../signin/signin';
-import { SignupPage } from './../signup/signup';
 import { User } from '../../models/user.model';
 import { UserService } from './../../providers/user.service';
 
@@ -14,40 +13,29 @@ import { UserService } from './../../providers/user.service';
 export class HomePage {
 
   users: Observable<User[]>;
+  view: string = 'chats';
 
   constructor(
     public navCtrl: NavController,
     private userService: UserService,
-    private authService: AuthService,
-    private alertCtrl: AlertController
+    private authService: AuthService
   ) {
 
   }
 
-  ionViewCanEnter(){
-
-   if(this.authService.currentUser() === null){
-      let alert = this.alertCtrl.create({
-        title: 'Por favor, logue no App',
-        subTitle: 'Você precisa logar no aplicativo para acessar essa página',
-        buttons: ['OK']
-      });
-      alert.present();
-      this.navCtrl.setRoot(SigninPage)
-    }
-
+  ionViewCanEnter(): Promise<boolean>{
+    return this.authService.authenticated;
   }
 
   ionViewDidLoad(){
     this.users = this.userService.getUsers();
-  }
-
-  login() {
+    console.log(this.authService.currentUser());
 
   }
 
-  onSignup() {
-    this.navCtrl.push(SignupPage)
+  onLogout(){
+    this.authService.logout();
+    this.navCtrl.setRoot(SigninPage);
   }
 
   onChatCreate() {
